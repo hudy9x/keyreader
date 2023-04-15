@@ -3,20 +3,31 @@ import { listen } from "@tauri-apps/api/event"
 import "./App.css"
 
 const specialKeysObj = {
-  Delete: "×",
+  Delete: "⌦",
   PageUp: "⇞",
   PageDown: "⇟",
-  Home: "⌂",
-  End: "",
+  Home: "⇱",
+  End: "⇲",
   RightArrow: "→",
   DownArrow: "↓",
   UpArrow: "↑",
   LeftArrow: "←",
   Enter: "↵",
-  Esc: "␛",
+  Esc: "⎋",
   Backspace: "⌫",
   Space: "␣",
   Tab: "⇆",
+  Control: "⌃",
+  ControlLeft: "⌃",
+  ControlRight: "⌃",
+  Alt: "⎇",
+  AltGr: "⎇",
+  CapsLock: "⇪",
+  Shift: "⇧",
+  ShiftLeft: "⇧",
+  ShiftRight: "⇧",
+  MetaLeft: "⊞",
+  MetaRight: "⊞",
 }
 
 const specialKeys = Object.keys(specialKeysObj)
@@ -24,16 +35,17 @@ const specialKeys = Object.keys(specialKeysObj)
 function App() {
   const [tickers, setTickers] = useState<string[]>([])
   const [fixedKeycaps, setFixedKeycaps] = useState([
-    { title: "Ctrl", id: ["ControlLeft"], active: false },
-    { title: "Win", id: ["MetaLeft"], active: false },
-    { title: "Alt", id: ["Alt"], active: false },
-    { title: "Shift", id: ["ShiftLeft", "ShiftRight"], active: false },
+    { title: "⌃", id: ["ControlLeft", "ControlRight"], active: false },
+    { title: "⊞", id: ["MetaLeft", "MetaRight"], active: false },
+    { title: "⎇", id: ["Alt"], active: false },
+    { title: "⇧", id: ["ShiftLeft", "ShiftRight"], active: false },
   ])
 
   const updateTickers = (message: string) => {
     const max = 10
     setTickers((prevTickers) => {
       const charCode = message.charCodeAt(0)
+      console.log("update", message)
 
       if (message === "	") {
         console.log("tab ====")
@@ -77,10 +89,10 @@ function App() {
       }
 
       if (mode === "KeyPress") {
-        if (specialKeys.includes(message)) {
-          updateTickers(message)
-          return
-        }
+        // if (specialKeys.includes(message)) {
+        updateTickers(message)
+        // return
+        // }
 
         setFixedKeycaps((fixedKeycaps) => {
           return fixedKeycaps.map((keycap) => {
@@ -117,7 +129,7 @@ function App() {
       data-tauri-drag-region
       className="ticker-container overflow-hidden w-[300px] flex flex-col"
     >
-      <div className="tickers flex items-center justify-center w-full py-10 bg-gray-900 rounded-t-md px-4 shadow-xl">
+      <div className="tickers flex items-center justify-center w-full py-10 main-background rounded-t-md px-4 shadow-xl">
         {tickers.map((ticker, idx) => {
           return (
             <div className="ticker-item" key={idx}>
@@ -132,7 +144,7 @@ function App() {
           return (
             <div
               key={index}
-              className={`keycap bg-gray-900 text-center shadow-md`}
+              className={`keycap main-background text-center shadow-md`}
             >
               <span className={active ? "" : "opacity-50"}>{keycap.title}</span>
             </div>

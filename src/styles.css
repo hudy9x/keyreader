@@ -22,6 +22,10 @@ body {
   @apply flex items-center justify-center h-screen;
 }
 
+.main-background {
+  background: rgba(0, 0, 0, 0.8);
+}
+
 .tickers {
   @apply pointer-events-none;
 }
