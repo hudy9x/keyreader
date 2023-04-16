@@ -23,11 +23,11 @@ body {
 }
 
 .main-background {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.95);
 }
 
 .tickers {
-  @apply pointer-events-none;
+  @apply pointer-events-none rounded-t-3xl;
 }
 
 .ticker-container {
@@ -44,9 +44,9 @@ body {
 }
 
 .keycap:first-child {
-  @apply rounded-bl-md;
+  @apply rounded-bl-3xl;
 }
 
 .keycap:last-child {
-  @apply rounded-br-md;
+  @apply rounded-br-3xl;
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { listen } from "@tauri-apps/api/event"
 import "./App.css"
+import Key from "./Key"
 
 const specialKeysObj = {
   Delete: "⌦",
@@ -20,35 +21,88 @@ const specialKeysObj = {
   Control: "⌃",
   ControlLeft: "⌃",
   ControlRight: "⌃",
-  Alt: "⎇",
-  AltGr: "⎇",
+  Alt: "⌥",
+  AltGr: "⌥",
   CapsLock: "⇪",
   Shift: "⇧",
   ShiftLeft: "⇧",
   ShiftRight: "⇧",
   MetaLeft: "⊞",
   MetaRight: "⊞",
+  Minus: "-",
+  Equal: "=",
+  SemiColon: ";",
+  Quote: "'",
+  Dot: ".",
+  Comma: ",",
+  Slash: "/",
 }
 
-const specialKeys = Object.keys(specialKeysObj)
+const controlKeyCodes = [
+  "@",
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+  "[",
+  "\\",
+  "]",
+  "^",
+  "_",
+]
+
+let controlPressed = false
+const controlKeys = ["ControlLeft", "ControlRight"]
 
 function App() {
-  const [tickers, setTickers] = useState<string[]>([])
+  const [tickers, setTickers] = useState<string[]>(["."])
   const [fixedKeycaps, setFixedKeycaps] = useState([
-    { title: "⌃", id: ["ControlLeft", "ControlRight"], active: false },
-    { title: "⊞", id: ["MetaLeft", "MetaRight"], active: false },
-    { title: "⎇", id: ["Alt"], active: false },
-    { title: "⇧", id: ["ShiftLeft", "ShiftRight"], active: false },
+    {
+      title: specialKeysObj.ShiftLeft,
+      id: ["ShiftLeft", "ShiftRight"],
+      active: false,
+    },
+    {
+      title: specialKeysObj.ControlLeft,
+      id: controlKeys,
+      active: false,
+    },
+    { title: specialKeysObj.Alt, id: ["Alt"], active: false },
+    {
+      title: specialKeysObj.MetaLeft,
+      id: ["MetaLeft", "MetaRight"],
+      active: false,
+    },
   ])
 
   const updateTickers = (message: string) => {
-    const max = 10
+    const max = 6
     setTickers((prevTickers) => {
       const charCode = message.charCodeAt(0)
-      console.log("update", message)
 
       if (message === "	") {
-        console.log("tab ====")
         message = specialKeysObj.Tab
       }
 
@@ -58,6 +112,11 @@ function App() {
 
       if (charCode === 27) {
         message = specialKeysObj.Esc
+      }
+
+      console.log("controlPressed", controlPressed)
+      if (controlKeyCodes[charCode] && controlPressed) {
+        message = controlKeyCodes[charCode]
       }
 
       if (charCode === 8) {
@@ -72,7 +131,24 @@ function App() {
         message = specialKeysObj[message]
       }
 
-      let newTickers = [...prevTickers, ...[message]]
+      let newTickers = []
+      if (
+        [
+          specialKeysObj.ControlLeft,
+          specialKeysObj.ControlRight,
+          specialKeysObj.MetaLeft,
+          specialKeysObj.MetaRight,
+          specialKeysObj.Alt,
+          specialKeysObj.AltGr,
+          specialKeysObj.ShiftLeft,
+          specialKeysObj.ShiftRight,
+        ].includes(message)
+      ) {
+        newTickers = [message]
+      } else {
+        newTickers = [...prevTickers, ...[message]]
+      }
+
       newTickers = newTickers.length > max ? newTickers.slice(1) : newTickers
 
       return newTickers
@@ -80,19 +156,23 @@ function App() {
   }
 
   useEffect(() => {
+    let isCtrl
     const unlisten = listen("keypress", ({ payload }) => {
+      console.log("====================")
       const { mode, message } = payload as { message: string; mode: string }
-      console.log(mode, message)
+      console.log(mode, message, message.charCodeAt(0))
 
       if (mode === "Some") {
         updateTickers(message)
       }
 
       if (mode === "KeyPress") {
-        // if (specialKeys.includes(message)) {
+        if (controlKeys.includes(message)) {
+          console.log("109238098")
+          controlPressed = true
+        }
+
         updateTickers(message)
-        // return
-        // }
 
         setFixedKeycaps((fixedKeycaps) => {
           return fixedKeycaps.map((keycap) => {
@@ -106,6 +186,9 @@ function App() {
       }
 
       if (mode === "KeyRelease") {
+        if (controlKeys.includes(message)) {
+          controlPressed = false
+        }
         setFixedKeycaps((fixedKeycaps) => {
           return fixedKeycaps.map((keycap) => {
             const cloned = { ...keycap }
@@ -129,13 +212,9 @@ function App() {
       data-tauri-drag-region
       className="ticker-container overflow-hidden w-[300px] flex flex-col"
     >
-      <div className="tickers flex items-center justify-center w-full py-10 main-background rounded-t-md px-4 shadow-xl">
+      <div className="tickers flex items-center justify-center w-full py-10 main-background px-4 shadow-xl">
         {tickers.map((ticker, idx) => {
-          return (
-            <div className="ticker-item" key={idx}>
-              {ticker}
-            </div>
-          )
+          return <Key key={idx} ticker={ticker} />
         })}
       </div>
       <div className="fixed-keycaps grid grid-cols-4 mt-0.5 gap-0.5">
