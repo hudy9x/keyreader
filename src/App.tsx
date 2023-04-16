@@ -3,7 +3,9 @@ import { listen } from "@tauri-apps/api/event"
 import "./App.css"
 import Key from "./Key"
 
-const specialKeysObj = {
+const specialKeysObj: {
+  [key: string]: string
+} = {
   Delete: "⌦",
   PageUp: "⇞",
   PageDown: "⇟",
