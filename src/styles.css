@@ -16,7 +16,6 @@
   font-style: normal;
 }
 
-
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -39,6 +38,10 @@ body {
 
 .main-background {
   background: rgba(0, 0, 0, 0.95);
+}
+
+.btn-close {
+  @apply opacity-0 text-sm absolute top-1 right-1 text-red-400 rounded-full p-1 hover:bg-red-400/20 w-[28px] h-[28px];
 }
 
 .tickers {

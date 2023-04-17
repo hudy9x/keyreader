@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { listen } from "@tauri-apps/api/event"
+import { appWindow } from "@tauri-apps/api/window"
 import "./App.css"
 import Key from "./Key"
 import { controlKeyCodes, specialKeysObj } from "./config"
@@ -166,9 +167,16 @@ function App() {
   return (
     <div
       data-tauri-drag-region
-      className="ticker-container overflow-hidden w-[300px] flex flex-col"
+      className="ticker-container overflow-hidden w-[300px] flex flex-col group relative"
     >
-      <button></button>
+      <button
+        onClick={() => {
+          appWindow.close()
+        }}
+        className="btn-close group-hover:opacity-100 "
+      >
+        ✕
+      </button>
       <div className="tickers flex items-center justify-center w-full py-10 main-background px-8 shadow-xl">
         {tickers.map((ticker, idx) => {
           return <Key key={idx} ticker={ticker} />
