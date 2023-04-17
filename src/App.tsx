@@ -2,84 +2,13 @@ import { useEffect, useState } from "react"
 import { listen } from "@tauri-apps/api/event"
 import "./App.css"
 import Key from "./Key"
-
-const specialKeysObj: {
-  [key: string]: string
-} = {
-  Delete: "⌦",
-  PageUp: "⇞",
-  PageDown: "⇟",
-  Home: "⇱",
-  End: "⇲",
-  RightArrow: "→",
-  DownArrow: "↓",
-  UpArrow: "↑",
-  LeftArrow: "←",
-  Enter: "↵",
-  Esc: "⎋",
-  Backspace: "⌫",
-  Space: "␣",
-  Tab: "⇆",
-  Control: "⌃",
-  ControlLeft: "⌃",
-  ControlRight: "⌃",
-  Alt: "⌥",
-  AltGr: "⌥",
-  CapsLock: "⇪",
-  Shift: "⇧",
-  ShiftLeft: "⇧",
-  ShiftRight: "⇧",
-  MetaLeft: "⊞",
-  MetaRight: "⊞",
-  Minus: "-",
-  Equal: "=",
-  SemiColon: ";",
-  Quote: "'",
-  Dot: ".",
-  Comma: ",",
-  Slash: "/",
-}
-
-const controlKeyCodes = [
-  "@",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-  "[",
-  "\\",
-  "]",
-  "^",
-  "_",
-]
+import { controlKeyCodes, specialKeysObj } from "./config"
 
 let controlPressed = false
 const controlKeys = ["ControlLeft", "ControlRight"]
 
 function App() {
-  const [tickers, setTickers] = useState<string[]>(["."])
+  const [tickers, setTickers] = useState<string[]>(["NONE"])
   const [fixedKeycaps, setFixedKeycaps] = useState([
     {
       title: specialKeysObj.ShiftLeft,
@@ -99,12 +28,43 @@ function App() {
     },
   ])
 
+  const calculateMaxDisplayChars = () => {
+    const tickerContainer = document.querySelector(".tickers") as HTMLDivElement
+    const tickerItems = document.querySelectorAll(
+      ".ticker-item"
+    ) as NodeListOf<HTMLDivElement>
+
+    let width = 0
+    const maxWidth = tickerContainer.offsetWidth
+
+    tickerItems.forEach((ticker) => {
+      width += ticker.offsetWidth
+    })
+
+    const deltaWidth = maxWidth - width
+
+    if (deltaWidth < 0) {
+      return 3
+    }
+
+    if (deltaWidth < 75) {
+      return 5
+    }
+
+    if (deltaWidth < 200) {
+      return 12
+    }
+
+    return 14
+  }
+
   const updateTickers = (message: string) => {
-    const max = 6
+    const max = calculateMaxDisplayChars()
+
     setTickers((prevTickers) => {
       const charCode = message.charCodeAt(0)
 
-      if (message === "	") {
+      if (charCode === 9) {
         message = specialKeysObj.Tab
       }
 
@@ -116,7 +76,6 @@ function App() {
         message = specialKeysObj.Esc
       }
 
-      console.log("controlPressed", controlPressed)
       if (controlKeyCodes[charCode] && controlPressed) {
         message = controlKeyCodes[charCode]
       }
@@ -125,7 +84,7 @@ function App() {
         message = specialKeysObj.Backspace
       }
 
-      if (message === " ") {
+      if (charCode === 32) {
         message = specialKeysObj.Space
       }
 
@@ -142,8 +101,6 @@ function App() {
           specialKeysObj.MetaRight,
           specialKeysObj.Alt,
           specialKeysObj.AltGr,
-          specialKeysObj.ShiftLeft,
-          specialKeysObj.ShiftRight,
         ].includes(message)
       ) {
         newTickers = [message]
@@ -151,26 +108,24 @@ function App() {
         newTickers = [...prevTickers, ...[message]]
       }
 
-      newTickers = newTickers.length > max ? newTickers.slice(1) : newTickers
+      const currLen = newTickers.length
+      newTickers = currLen > max ? newTickers.slice(currLen - max) : newTickers
 
       return newTickers
     })
   }
 
   useEffect(() => {
-    let isCtrl
     const unlisten = listen("keypress", ({ payload }) => {
-      console.log("====================")
       const { mode, message } = payload as { message: string; mode: string }
-      console.log(mode, message, message.charCodeAt(0))
 
       if (mode === "Some") {
         updateTickers(message)
       }
 
       if (mode === "KeyPress") {
+        console.log("keypress", message)
         if (controlKeys.includes(message)) {
-          console.log("109238098")
           controlPressed = true
         }
 
@@ -203,7 +158,6 @@ function App() {
       }
 
       return () => {
-        console.log("called")
         unlisten.then((stop) => stop())
       }
     })
@@ -214,7 +168,8 @@ function App() {
       data-tauri-drag-region
       className="ticker-container overflow-hidden w-[300px] flex flex-col"
     >
-      <div className="tickers flex items-center justify-center w-full py-10 main-background px-4 shadow-xl">
+      <button></button>
+      <div className="tickers flex items-center justify-center w-full py-10 main-background px-8 shadow-xl">
         {tickers.map((ticker, idx) => {
           return <Key key={idx} ticker={ticker} />
         })}
