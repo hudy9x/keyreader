@@ -46,18 +46,24 @@ body {
 
 .tickers {
   @apply pointer-events-none rounded-t-3xl;
+  @apply flex items-center justify-center w-full py-10 main-background px-8 shadow-xl;
 }
 
 .ticker-container {
-  @apply text-white;
+  @apply text-white overflow-hidden w-[300px] flex flex-col relative;
   font-size: 20px;
 }
 
 .ticker-item {
-  font-size: 2.5rem;
+  font-size: 3rem;
+}
+
+.modifier-keycaps {
+  @apply grid grid-cols-4 mt-0.5 gap-0.5;
 }
 
 .keycap {
+  @apply text-center shadow-md;
   padding: 20% 20%;
 }
 

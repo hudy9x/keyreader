@@ -7,13 +7,16 @@ import { controlKeyCodes, specialKeysObj } from "./config"
 
 let controlPressed = false
 const controlKeys = ["ControlLeft", "ControlRight"]
+const shiftKeys = ["ShiftLeft", "ShiftRight"]
+const metaKeys = ["MetaLeft", "MetaRight"]
+const altKeys = ["Alt", "AltGr"]
 
 function App() {
-  const [tickers, setTickers] = useState<string[]>(["NONE"])
-  const [fixedKeycaps, setFixedKeycaps] = useState([
+  const [alphabeticKeys, setAlphabeticKeys] = useState<string[]>(["NONE"])
+  const [modifierKeys, setModifierKeys] = useState([
     {
       title: specialKeysObj.ShiftLeft,
-      id: ["ShiftLeft", "ShiftRight"],
+      id: shiftKeys,
       active: false,
     },
     {
@@ -21,48 +24,29 @@ function App() {
       id: controlKeys,
       active: false,
     },
-    { title: specialKeysObj.Alt, id: ["Alt"], active: false },
+    { title: specialKeysObj.Alt, id: altKeys, active: false },
     {
       title: specialKeysObj.MetaLeft,
-      id: ["MetaLeft", "MetaRight"],
+      id: metaKeys,
       active: false,
     },
   ])
 
-  const calculateMaxDisplayChars = () => {
-    const tickerContainer = document.querySelector(".tickers") as HTMLDivElement
-    const tickerItems = document.querySelectorAll(
-      ".ticker-item"
-    ) as NodeListOf<HTMLDivElement>
-
-    let width = 0
-    const maxWidth = tickerContainer.offsetWidth
-
-    tickerItems.forEach((ticker) => {
-      width += ticker.offsetWidth
-    })
-
-    const deltaWidth = maxWidth - width
-
-    if (deltaWidth < 0) {
-      return 3
-    }
-
-    if (deltaWidth < 75) {
-      return 5
-    }
-
-    if (deltaWidth < 200) {
-      return 12
-    }
-
-    return 14
-  }
+  const needTobeCleared = (message: string) =>
+    [
+      specialKeysObj.ControlLeft,
+      specialKeysObj.ControlRight,
+      specialKeysObj.MetaLeft,
+      specialKeysObj.MetaRight,
+      specialKeysObj.Alt,
+      specialKeysObj.AltGr,
+      specialKeysObj.Esc,
+    ].includes(message)
 
   const updateTickers = (message: string) => {
-    const max = calculateMaxDisplayChars()
+    const max = 5
 
-    setTickers((prevTickers) => {
+    setAlphabeticKeys((prevTickers) => {
       const charCode = message.charCodeAt(0)
 
       if (charCode === 9) {
@@ -77,10 +61,6 @@ function App() {
         message = specialKeysObj.Esc
       }
 
-      if (controlKeyCodes[charCode] && controlPressed) {
-        message = controlKeyCodes[charCode]
-      }
-
       if (charCode === 8) {
         message = specialKeysObj.Backspace
       }
@@ -89,73 +69,66 @@ function App() {
         message = specialKeysObj.Space
       }
 
+      if (controlKeyCodes[charCode] && controlPressed) {
+        message = controlKeyCodes[charCode]
+      }
+
       if (message in specialKeysObj) {
         message = specialKeysObj[message]
       }
 
       let newTickers = []
-      if (
-        [
-          specialKeysObj.ControlLeft,
-          specialKeysObj.ControlRight,
-          specialKeysObj.MetaLeft,
-          specialKeysObj.MetaRight,
-          specialKeysObj.Alt,
-          specialKeysObj.AltGr,
-        ].includes(message)
-      ) {
+      if (needTobeCleared(message)) {
         newTickers = [message]
       } else {
         newTickers = [...prevTickers, ...[message]]
       }
 
       const currLen = newTickers.length
-      newTickers = currLen > max ? newTickers.slice(currLen - max) : newTickers
+      newTickers = currLen > max ? newTickers.slice(1) : newTickers
 
       return newTickers
     })
   }
 
+  const updateModifierActiveStatus = (message: string, status: boolean) => {
+    setModifierKeys((modifierKeys) => {
+      return modifierKeys.map((keycap) => {
+        const cloned = { ...keycap }
+        if (cloned.id.includes(message)) {
+          cloned.active = status
+        }
+        return cloned
+      })
+    })
+  }
+
+  const updateControlPressedStatus = (message: string, status: boolean) => {
+    if (controlKeys.includes(message)) controlPressed = status
+  }
+
+  const closeWindow = () => {
+    appWindow.close()
+  }
+
   useEffect(() => {
     const unlisten = listen("keypress", ({ payload }) => {
       const { mode, message } = payload as { message: string; mode: string }
+      console.log("message", message)
 
       if (mode === "Some") {
         updateTickers(message)
       }
 
       if (mode === "KeyPress") {
-        console.log("keypress", message)
-        if (controlKeys.includes(message)) {
-          controlPressed = true
-        }
-
+        updateControlPressedStatus(message, true)
         updateTickers(message)
-
-        setFixedKeycaps((fixedKeycaps) => {
-          return fixedKeycaps.map((keycap) => {
-            const cloned = { ...keycap }
-            if (cloned.id.includes(message)) {
-              cloned.active = true
-            }
-            return cloned
-          })
-        })
+        updateModifierActiveStatus(message, true)
       }
 
       if (mode === "KeyRelease") {
-        if (controlKeys.includes(message)) {
-          controlPressed = false
-        }
-        setFixedKeycaps((fixedKeycaps) => {
-          return fixedKeycaps.map((keycap) => {
-            const cloned = { ...keycap }
-            if (cloned.id.includes(message)) {
-              cloned.active = false
-            }
-            return cloned
-          })
-        })
+        updateControlPressedStatus(message, false)
+        updateModifierActiveStatus(message, false)
       }
 
       return () => {
@@ -165,31 +138,23 @@ function App() {
   }, [])
 
   return (
-    <div
-      data-tauri-drag-region
-      className="ticker-container overflow-hidden w-[300px] flex flex-col group relative"
-    >
+    <div data-tauri-drag-region className="ticker-container group">
       <button
-        onClick={() => {
-          appWindow.close()
-        }}
+        onClick={closeWindow}
         className="btn-close group-hover:opacity-100 "
       >
         ✕
       </button>
-      <div className="tickers flex items-center justify-center w-full py-10 main-background px-8 shadow-xl">
-        {tickers.map((ticker, idx) => {
+      <div className="tickers">
+        {alphabeticKeys.map((ticker, idx) => {
           return <Key key={idx} ticker={ticker} />
         })}
       </div>
-      <div className="fixed-keycaps grid grid-cols-4 mt-0.5 gap-0.5">
-        {fixedKeycaps.map((keycap, index) => {
+      <div className="modifier-keycaps">
+        {modifierKeys.map((keycap, index) => {
           const active = keycap.active
           return (
-            <div
-              key={index}
-              className={`keycap main-background text-center shadow-md`}
-            >
+            <div key={index} className={`keycap main-background`}>
               <span className={active ? "" : "opacity-50"}>{keycap.title}</span>
             </div>
           )
