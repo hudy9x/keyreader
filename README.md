@@ -50,4 +50,5 @@ Note: I'm a new to Rust, so please help me improve the source code. Big thanks f
 
 # License
 [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)
+
 KeyCastr has been freely available for the Windows since 2023.
