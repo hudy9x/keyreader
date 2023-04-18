@@ -26,7 +26,8 @@ Download the latest version from [here](https://github.com/hudy9x/keyreader/rele
 
 Or, install using [scoop](https://scoop.sh/)
 ```shell
-$ .... comming soon
+$ scoop bucket add my-bucket https://github.com/hudy9x/scoop-buckets
+$ scoop install keyreader
 ```
 
 ### For Linux
