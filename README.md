@@ -30,6 +30,13 @@ $ scoop bucket add my-bucket https://github.com/hudy9x/scoop-buckets
 $ scoop install keyreader
 ```
 
+### For Linux
+For now, follow Development guide to build your own.
+
+
+### For Mac
+Please use [KeyCastr](https://github.com/keycastr/keycastr) instead
+
 # Upgrade 
 ### For Windows
 If you already have KeyReader on your PC and you want to upgrade it's version
@@ -42,13 +49,6 @@ $ scoop update keyreader
 ```
 
 Or, just download the latest version and re-install it
-
-### For Linux
-For now, follow Development guide to build your own.
-
-
-### For Mac
-Please use [KeyCastr](https://github.com/keycastr/keycastr) instead
 
 # Development
 KeyReader built on [Tauri](https://tauri.app/). So, please follow their [instruction](https://tauri.app/v1/guides/getting-started/prerequisites) for installing development environment
