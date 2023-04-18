@@ -1,10 +1,10 @@
 # Introduction
 
-Keyread - an open source keystroke visualizer that inspired from KeyCastr
+KeyReader - an open source keystroke visualizer that inspired from KeyCastr
 
 ![image-1](./docs/screenshoot.png)
 
-It enables you to share your keystroke when streaming your screen. And yes, it looks like KetCastr. 
+KeyReader enables you to share your keystroke when streaming your screen. And yes, it looks like KetCastr. 
 The only difference is that it supports **Windows**. 
 
 For now, it only provide one theme as the above image
@@ -16,7 +16,7 @@ Enable to visualize typing
 ![image-2](./docs/typing.gif)
 
 
-It alse allows you to moving around
+KeyReader allows you to moving around as well
 
 ![image-3](./docs/moving.gif)
 
@@ -37,7 +37,7 @@ For now, follow Development guide to build your own.
 Please use [KeyCastr](https://github.com/keycastr/keycastr) instead
 
 # Development
-KeyReader is built on [Tauri](https://tauri.app/). So, please follow their [instruction](https://tauri.app/v1/guides/getting-started/prerequisites) for installing development environment
+KeyReader built on [Tauri](https://tauri.app/). So, please follow their [instruction](https://tauri.app/v1/guides/getting-started/prerequisites) for installing development environment
 
 Second, you must have `nodejs`, `npm` or `yarn`
 
