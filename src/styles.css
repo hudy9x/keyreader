@@ -64,7 +64,7 @@ body {
 
 .keycap {
   @apply text-center shadow-md;
-  padding: 20% 20%;
+  padding: 0.625rem 1rem;
 }
 
 .keycap:first-child {

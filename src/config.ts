@@ -33,6 +33,7 @@ export const specialKeysObj: {
   Dot: ".",
   Comma: ",",
   Slash: "/",
+  PrintScreen: "⎙",
 }
 
 export const controlKeyCodes = [

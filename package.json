@@ -1,7 +1,10 @@
 {
-  "name": "keyreader",
+  "name": "KeyReader",
+  "author": "hudy9x",
+  "description": "A simple keystroke visualizer for Windows",
   "private": true,
   "version": "0.0.0",
+  "licence": "BSD-3-Clause",
   "type": "module",
   "scripts": {
     "dev": "vite",

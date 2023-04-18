@@ -114,7 +114,6 @@ function App() {
   useEffect(() => {
     const unlisten = listen("keypress", ({ payload }) => {
       const { mode, message } = payload as { message: string; mode: string }
-      console.log("message", message)
 
       if (mode === "Some") {
         updateTickers(message)
