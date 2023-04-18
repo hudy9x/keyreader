@@ -30,6 +30,19 @@ $ scoop bucket add my-bucket https://github.com/hudy9x/scoop-buckets
 $ scoop install keyreader
 ```
 
+# Upgrade 
+### For Windows
+If you already have KeyReader on your PC and you want to upgrade it's version
+
+Follow the guide
+
+```shell
+$ scoop update
+$ scoop update keyreader
+```
+
+Or, just download the latest version and re-install it
+
 ### For Linux
 For now, follow Development guide to build your own.
 
