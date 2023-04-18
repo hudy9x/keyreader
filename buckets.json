@@ -1,0 +1,10 @@
+{
+  "version": "0.4.0",
+  "url": "https://github.com/hudy9x/keyreader/releases/download/v0.4.0/KeyReader_0.4.0_x64_en-US.msi",
+  "bin": "/PFiles/KeyReader/KeyReader.exe",
+  "hash": ["4b7cd937edebe583ac03225af5e4cf90a911c8925b134dd6d25d634fbce7eae7"],
+  "pre_install": [
+    "Copy-Item -Path \"$dir\\PFiles\\KeyReader\\KeyReader.exe\" -Destination \"$dir\""
+  ],
+  "shortcuts": [["KeyReader.exe", "KeyReader"]]
+}
