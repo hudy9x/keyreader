@@ -11,7 +11,12 @@ For now, it only provide one theme as the above image
 
 ## Demo
 
-[![Watch the video](./docs/typing-screenshot.png)](./docs/typing.mp4)
+Enable to visualize typing
+![image-2](./docs/typing.gif)
+
+
+It alse allows you to moving around
+![image-3](./docs/moving.gif)
 
 # Installation
 ### For Windows 
