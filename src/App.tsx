@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { listen } from "@tauri-apps/api/event"
 import { appWindow } from "@tauri-apps/api/window"
-import "./App.css"
 import Key from "./Key"
 import { controlKeyCodes, specialKeysObj } from "./config"
 
