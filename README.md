@@ -9,6 +9,10 @@ The only difference is that it supports **Windows**.
 
 For now, it only provide one theme as the above image
 
+## Demo
+
+[![Watch the video](./docs/typing-screenshot.png)](./docs/typing.mp4)
+
 # Installation
 ### For Windows 
 Download the latest version from [here](https://github.com/hudy9x/keyreader/releases)
