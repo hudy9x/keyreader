@@ -1,6 +1,28 @@
+import { SuperSEO } from "react-super-seo"
 export default function App() {
   return (
     <div className="app mx-auto sm:w-[700px]">
+      <SuperSEO
+        title="KeyReader"
+        description="A simple keystroke application for Windows"
+        lang="en"
+        openGraph={{
+          ogImage: {
+            ogImage: "/keyreader/screenshot.png",
+            ogImageAlt: "KeyReader",
+            ogImageWidth: 400,
+            ogImageHeight: 200,
+            ogImageType: "image/png",
+          },
+        }}
+        twitter={{
+          twitterSummaryCard: {
+            summaryCardImage: "/keyreader/screenshot.png",
+            summaryCardImageAlt: "KeyReader",
+            summaryCardSiteUsername: "hudy9x",
+          },
+        }}
+      />
       <div className="header flex items-center justify-between px-4 py-8">
         <h1>
           <img src="/keyreader/logo.png" className="inline-block w-12 pr-2" />
