@@ -58,7 +58,12 @@ export default function App() {
           own or contribute your features, fixbugs to my repos. I would love to
           learn from you guys
         </p>
-        <img src="/keyreader/screenshot.png" className="inline-block" />
+        <img
+          src="/keyreader/screenshot.png"
+          className="inline-block"
+          width={400}
+          height={200}
+        />
 
         <div className="space-y-5 pb-[100px] mx-5">
           <a href="https://github.com/hudy9x/keyreader/releases/latest">
