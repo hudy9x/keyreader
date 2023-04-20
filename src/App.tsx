@@ -3,6 +3,7 @@ export default function App() {
     <div className="app mx-auto sm:w-[700px]">
       <div className="header flex items-center justify-between px-4 py-8">
         <h1>
+          <img src="/logo.png" className="inline-block w-12 pr-2" />
           <span className="font-bold text-gray-800">KeyReader</span>
           <span className="pl-2 text-xs text-gray-400">v0.4.0</span>
         </h1>
@@ -25,11 +26,11 @@ export default function App() {
           </button>
         </a>
       </div>
-      <div className="main text-center space-y-4 mt-[40px] sm:mt-[40px]">
-        <h2 className="font-bold text-3xl w-[450px] mx-auto">
+      <div className="main text-center space-y-4 mt-[20px] sm:mt-[40px]">
+        <h2 className="font-bold text-2xl sm:text-3xl px-4 sm:w-[500px] mx-auto">
           A simple keystroke application for Windows
         </h2>
-        <p className="text-gray-400 text-sm w-[500px] leading-6 mx-auto">
+        <p className="text-gray-400 text-sm px-4 text-xs sm:text-sm sm:w-[550px] leading-6 mx-auto">
           Inspired by KeyCastr and built on Tauri toolkit with ReactJS.
           <br /> It is an open source, so feel free to fork for creating your
           own or contribute your features, fixbugs to my repos. I would love to
