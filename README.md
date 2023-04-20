@@ -10,6 +10,7 @@ The only difference is that it supports **Windows**.
 For now, it only provide one theme as the above image
 
 ## Demo
+Visit [homepage](https://hudy9x.github.io/keyreader/)
 
 Enable to visualize typing
 
