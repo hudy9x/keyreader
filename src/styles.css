@@ -22,8 +22,8 @@
   line-height: 24px;
   font-weight: 400;
 
-  color: #0f0f0f;
-  background-color: transparent;
+  color: #000;
+  background-color: white;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -32,45 +32,3 @@
   -webkit-text-size-adjust: 100%;
 }
 
-body {
-  @apply flex items-center justify-center h-screen;
-}
-
-.main-background {
-  background: rgba(0, 0, 0, 0.95);
-}
-
-.btn-close {
-  @apply opacity-0 text-sm absolute top-1 right-1 text-red-400 rounded-full p-1 hover:bg-red-400/20 w-[28px] h-[28px];
-}
-
-.tickers {
-  @apply pointer-events-none rounded-t-3xl;
-  @apply flex items-center justify-center w-full py-10 main-background px-8 shadow-xl;
-}
-
-.ticker-container {
-  @apply text-white overflow-hidden w-[300px] flex flex-col relative;
-  font-size: 20px;
-}
-
-.ticker-item {
-  font-size: 3rem;
-}
-
-.modifier-keycaps {
-  @apply grid grid-cols-4 mt-0.5 gap-0.5;
-}
-
-.keycap {
-  @apply text-center shadow-md;
-  padding: 0.625rem 1rem;
-}
-
-.keycap:first-child {
-  @apply rounded-bl-3xl;
-}
-
-.keycap:last-child {
-  @apply rounded-br-3xl;
-}
