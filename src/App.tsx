@@ -3,7 +3,7 @@ export default function App() {
     <div className="app mx-auto sm:w-[700px]">
       <div className="header flex items-center justify-between px-4 py-8">
         <h1>
-          <img src="/logo.png" className="inline-block w-12 pr-2" />
+          <img src="/keyreader/logo.png" className="inline-block w-12 pr-2" />
           <span className="font-bold text-gray-800">KeyReader</span>
           <span className="pl-2 text-xs text-gray-400">v0.4.0</span>
         </h1>
@@ -36,7 +36,7 @@ export default function App() {
           own or contribute your features, fixbugs to my repos. I would love to
           learn from you guys
         </p>
-        <img src="/screenshot.png" className="inline-block" />
+        <img src="/keyreader/screenshot.png" className="inline-block" />
 
         <div className="space-y-5 pb-[100px] mx-5">
           <a href="https://github.com/hudy9x/keyreader/releases/latest">
