@@ -25,7 +25,7 @@ export default function App() {
       />
       <div className="header flex items-center justify-between px-4 py-8">
         <h1>
-          <img src="/keyreader/logo.png" className="inline-block w-12 pr-2" />
+          <img src="/keyreader/logo.png" className="inline-block w-16 pr-2" />
           <span className="font-bold text-gray-800">KeyReader</span>
           <span className="pl-2 text-xs text-gray-400">v0.4.0</span>
         </h1>
@@ -53,10 +53,11 @@ export default function App() {
           A simple keystroke application for Windows
         </h2>
         <p className="text-gray-400 text-sm px-4 text-xs sm:text-sm sm:w-[550px] leading-6 mx-auto">
-          Inspired by KeyCastr and built on Tauri toolkit with ReactJS.
-          <br /> It is an open source, so feel free to fork for creating your
-          own or contribute your features, fixbugs to my repos. I would love to
-          learn from you guys
+          Built on the Tauri toolkit with ReactJS and inspired by KeyCastr.{" "}
+          <br />
+          This is an open-source application. Feel free to fork it to create
+          your own version or contribute new features and bug fixes to my
+          repository. I would love to learn from you all!
         </p>
         <img
           src="/keyreader/screenshot.png"
