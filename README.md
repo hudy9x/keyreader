@@ -2,6 +2,9 @@
 
 KeyReader - an open source keystroke visualizer that inspired from KeyCastr
 
+Watch how i built it on youtube: https://www.youtube.com/watch?v=hhwjGIICLuA&t=27s
+
+
 ![image-1](./docs/screenshoot.png)
 
 KeyReader enables you to share your keystroke when streaming your screen. And yes, it looks like KetCastr. 
