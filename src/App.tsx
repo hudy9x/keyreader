@@ -128,11 +128,11 @@ function App() {
         updateControlPressedStatus(message, false)
         updateModifierActiveStatus(message, false)
       }
-
-      return () => {
-        unlisten.then((stop) => stop())
-      }
     })
+
+    return () => {
+      unlisten.then((stop) => stop())
+    }
   }, [])
 
   return (
